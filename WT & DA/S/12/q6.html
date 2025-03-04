@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Details</title>
+    <script>
+        function fetchTeacher() {
+            let teacherName = document.getElementById("teacherName").value;
+            if (teacherName === "") {
+                document.getElementById("result").innerText = "Please select a teacher.";
+                return;
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "q6.php?name=" + encodeURIComponent(teacherName), true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("result").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h2>Select a Teacher</h2>
+    <select id="teacherName" onchange="fetchTeacher()">
+        <option value="">--Select--</option>
+        <option value="Dr. Sharma">Dr. Sharma</option>
+        <option value="Ms. Verma">Ms. Verma</option>
+        <option value="Mr. Patil">Mr. Patil</option>
+    </select>
+    <br><br>
+    <div id="result"></div>
+</body>
+</html>

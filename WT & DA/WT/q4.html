@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Contact Reader</title>
+    <script>
+        function loadContacts() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "contact.dat", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let lines = xhr.responseText.split("\n");
+                    let output = "<table border='1'><tr><th>Sr No</th><th>Name</th><th>Residence No</th><th>Mobile No</th><th>Address</th></tr>";
+
+                    for (let i = 0; i < lines.length; i++) {
+                        let parts = lines[i].split(",");
+                        if (parts.length === 5) {
+                            output += `<tr><td>${parts[0]}</td><td>${parts[1]}</td><td>${parts[2]}</td><td>${parts[3]}</td><td>${parts[4]}</td></tr>`;
+                        }
+                    }
+                    output += "</table>";
+                    document.getElementById("contactTable").innerHTML = output;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h2>Contact List</h2>
+    <button onclick="loadContacts()">Print</button>
+    <br><br>
+    <div id="contactTable"></div>
+</body>
+</html>
